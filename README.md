@@ -292,3 +292,7 @@ Here are the updates since 3.5.0:
 ### Crates
 
 We will add them later.
+  
+# Useful material: 2023/5/14
+### https://riscv-programming.org/book/riscv-book.html#pf26
+### [GNU Assembler Directives](https://ftp.gnu.org/old-gnu/Manuals/gas-2.9.1/html_chapter/as_7.html)

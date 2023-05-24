@@ -8,13 +8,14 @@
 //! We then call [`println!`] to display `Hello, world!`.
 
 #![deny(missing_docs)]
-#![deny(warnings)]
+// #![deny(warnings)]
 #![no_std]
 #![no_main]
 #![feature(panic_info_message)]
 
 use core::arch::global_asm;
 use log::*;
+
 
 #[macro_use]
 mod console;
@@ -30,7 +31,10 @@ pub fn clear_bss() {
         fn sbss();
         fn ebss();
     }
-    (sbss as usize..ebss as usize).for_each(|a| unsafe { (a as *mut u8).write_volatile(0) });
+    (sbss as usize..ebss as usize)
+        .for_each(|address| unsafe { (address as *mut u8).write_volatile(0) });
+    // (sbss as usize..ebss as usize)
+    //     .for_each(|address| {println!("{:X}", address)});
 }
 
 /// the rust entry-point of os
@@ -50,6 +54,12 @@ pub fn rust_main() -> ! {
     }
     clear_bss();
     logging::init();
+
+    sbi::console_putchar('M' as usize);
+    sbi::console_putchar('a' as usize);
+    sbi::console_putchar('r' as usize);
+    sbi::console_putchar('s' as usize);
+    panic!("Shutdown machine!");
     println!("[kernel] Hello, world!");
     trace!(
         "[kernel] .text [{:#x}, {:#x})",

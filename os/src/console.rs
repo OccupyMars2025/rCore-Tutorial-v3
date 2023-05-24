@@ -10,6 +10,11 @@ impl Write for Stdout {
         for c in s.chars() {
             console_putchar(c as usize);
         }
+
+        // // failure: try to print Chinese
+        // for b in s.bytes() {
+        //     console_putchar(b as usize);
+        // }
         Ok(())
     }
 }
@@ -30,6 +35,6 @@ macro_rules! print {
 #[macro_export]
 macro_rules! println {
     ($fmt: literal $(, $($arg: tt)+)?) => {
-        $crate::console::print(format_args!(concat!($fmt, "\n") $(, $($arg)+)?));
+        $crate::console::print(format_args!(concat!($fmt, "\n") $(, $($arg)+)?))
     }
 }

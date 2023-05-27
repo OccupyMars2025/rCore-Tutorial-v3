@@ -8,7 +8,7 @@
 //! We then call [`println!`] to display `Hello, world!`.
 
 #![deny(missing_docs)]
-// #![deny(warnings)]
+#![deny(warnings)]
 #![no_std]
 #![no_main]
 #![feature(panic_info_message)]
@@ -52,6 +52,8 @@ pub fn rust_main() -> ! {
         fn boot_stack_lower_bound(); // stack lower bound
         fn boot_stack_top(); // stack top
     }
+    println!("This is the start of rust_main");
+
     clear_bss();
     logging::init();
 
@@ -59,13 +61,14 @@ pub fn rust_main() -> ! {
     sbi::console_putchar('a' as usize);
     sbi::console_putchar('r' as usize);
     sbi::console_putchar('s' as usize);
-    panic!("Shutdown machine!");
+    // panic!("Shutdown machine!");
     println!("[kernel] Hello, world!");
     trace!(
-        "[kernel] .text [{:#x}, {:#x})",
+        "[kernel] .text [{:x}, {:#x})",
         stext as usize,
         etext as usize
     );
+    println!("finish trace");
     debug!(
         "[kernel] .rodata [{:#x}, {:#x})",
         srodata as usize, erodata as usize
@@ -82,5 +85,6 @@ pub fn rust_main() -> ! {
 
     // CI autotest success: sbi::shutdown(false)
     // CI autotest failed : sbi::shutdown(true)
-    sbi::shutdown(false)
+    // sbi::shutdown(false)
+    sbi::shutdown(true)
 }

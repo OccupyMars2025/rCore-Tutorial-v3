@@ -8,6 +8,8 @@
     .section .text
     .globl __alltraps
     .globl __restore
+    # why ".align 2" is necessary: 
+    # https://github.com/OccupyMars2025/rCore-Tutorial-v3/issues/1#issuecomment-1571211587
     .align 2
 __alltraps:
     csrrw sp, sscratch, sp

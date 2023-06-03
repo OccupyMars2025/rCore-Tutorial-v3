@@ -62,10 +62,24 @@ pub fn rust_main() -> ! {
         fn ebss(); // end addr of BSS segment
         fn boot_stack_lower_bound(); // stack lower bound
         fn boot_stack_top(); // stack top
+
+        // from os/src/link_app.S
+        fn _num_app(); 
+        fn app_0_end();
+        fn app_1_start();
     }
     clear_bss();
     logging::init();
     println!("[kernel] Hello, world!");
+
+    debug!("address of _num_app:    {:#x}", _num_app as usize);
+    debug!("address of app_0_end:   {:#x}", app_0_end as usize);
+    debug!("address of app_1_start: {:#x}", app_1_start as usize);
+    unsafe {
+        let num_app_ptr = _num_app as *const u64;
+        debug!("num of apps: {}", *num_app_ptr);
+    }
+
     trace!(
         "[kernel] .text [{:#x}, {:#x})",
         stext as usize,

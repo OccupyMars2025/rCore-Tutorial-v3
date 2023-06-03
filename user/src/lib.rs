@@ -9,7 +9,7 @@ mod lang_items;
 mod syscall;
 mod logging;
 
-use log::{info, debug, trace};
+use log::{info, debug};
 
 #[no_mangle]
 #[link_section = ".text.entry"]
